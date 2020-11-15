@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
 
+
     private GoogleMap mMap;
 
     @Override

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class google_maps extends Fragment {
 
+    private LocationManager lm;
+    private double latitude;
+    private double longitude;
+
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -32,9 +38,11 @@ public class google_maps extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            LatLng currentLocation = new LatLng(latitude, longitude);
+            float zoomLevel = 11.0f;
+
+            googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Marker in Sydney"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,zoomLevel));
         }
     };
 
@@ -49,6 +57,11 @@ public class google_maps extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle data = getArguments();
+        latitude = data.getDouble("lat");
+        longitude = data.getDouble("long");
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_frag);
         if (mapFragment != null) {
