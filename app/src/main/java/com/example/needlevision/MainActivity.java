@@ -5,20 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.needlevision.adapters.SlidePagerAdapter;
-import com.example.needlevision.fragments.google_maps;
 import com.example.needlevision.fragments.map_fragment;
 import com.example.needlevision.fragments.posts_fragment;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -43,15 +37,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadLoginPage(){
-        setContentView(R.layout.login_page);
-        findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
-
-            // Load the loadPagerPage function
-            @Override
-            public void onClick(View v) {
-                loadPagerPage();
-            }
-        });
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(intent);
+//        setContentView(R.layout.activity_login);
+//        findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
+//
+//            // Load the loadPagerPage function
+//            @Override
+//            public void onClick(View v) {
+//                loadPagerPage();
+//            }
+//        });
     }
 
     // Loads the Fragment Slides
