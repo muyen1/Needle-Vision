@@ -7,18 +7,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.needlevision.adapters.SlidePagerAdapter;
-import com.example.needlevision.fragments.google_maps;
 import com.example.needlevision.fragments.map_fragment;
 import com.example.needlevision.fragments.posts_fragment;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,16 +21,11 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
 
-
-    private GoogleMap mMap;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLoginPage();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
-
 
     }
 
@@ -48,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the loadPagerPage function
             @Override
-            public void onClick(View v) {
-                loadPagerPage();
+            public void onClick(View v) {                loadPagerPage();
             }
         });
     }

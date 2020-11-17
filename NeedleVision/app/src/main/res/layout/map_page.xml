@@ -4,25 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/map_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Map"
-        android:textSize="35dp"></TextView>
 
     <fragment
         android:id="@+id/map_frag"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="401dp"
-        android:layout_height="276dp"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_below="@id/map_text"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentBottom="false"
-        android:layout_centerInParent="false"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         tools:context=".fragments.google_maps" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/startBtn"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="300dp"
+        android:visibility="invisible"
+        android:text="Start" />
+    <ListView
+        android:id="@+id/lvOffices"
+        android:layout_below="@+id/map_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/divider"
+        android:dividerHeight="2px" />
 </RelativeLayout>
