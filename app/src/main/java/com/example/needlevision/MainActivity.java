@@ -28,20 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager pager;
-    private PagerAdapter pagerAdapter;
-
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
-    boolean signedIntoAppBefore;
 
     private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLoginPage();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -52,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
     }
 
     @Override
@@ -61,20 +56,22 @@ public class MainActivity extends AppCompatActivity {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         if(account == null){
-            signedIntoAppBefore = false;
+            loadLoginPage();
+            getSupportActionBar().hide();
         } else {
-            signedIntoAppBefore = true;
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
             startActivity(intent);
+
+//            loadPagerPage();
         }
     }
     
     private void loadLoginPage(){
         setContentView(R.layout.activity_login);
         findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
-
             // Load the loadPagerPage function
             @Override
             public void onClick(View v) {
@@ -87,31 +84,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
-            }
-        });
-    }
-
-    // Loads the Fragment Slides
-    private void loadPagerPage(){
-        setContentView(R.layout.activity_main);
-        List<Fragment> list = new ArrayList<>();
-        list.add(new map_fragment());
-        list.add(new posts_fragment());
-
-        pager = findViewById(R.id.pager);
-        pagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), list);
-        pager.setAdapter(pagerAdapter);
-
-        loadFAB();
-    }
-
-    private void loadFAB(){
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Bring Up Camera", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
     }
@@ -131,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+
+            // Load Pager
+            loadPagerPage();
         }
     }
 
@@ -148,5 +123,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void loadPagerPage(){
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(intent);
+    }
 
 }
