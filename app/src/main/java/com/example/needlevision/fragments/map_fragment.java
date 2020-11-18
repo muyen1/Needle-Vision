@@ -63,7 +63,6 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
 
     ViewGroup context;
 
-
     // when map is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {

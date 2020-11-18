@@ -51,7 +51,6 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Bring Up Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
             }
         });
     }
