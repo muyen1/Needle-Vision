@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
-    boolean signedIntoAppBefore;
 
     private GoogleMap mMap;
 
@@ -60,20 +59,19 @@ public class MainActivity extends AppCompatActivity {
 
         if(account == null){
             loadLoginPage();
+            getSupportActionBar().hide();
         } else {
-            signedIntoAppBefore = true;
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
             startActivity(intent);
+
+//            loadPagerPage();
         }
     }
     
     private void loadLoginPage(){
         setContentView(R.layout.activity_login);
-        getActionBar().hide();
-
         findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
-
             // Load the loadPagerPage function
             @Override
             public void onClick(View v) {
