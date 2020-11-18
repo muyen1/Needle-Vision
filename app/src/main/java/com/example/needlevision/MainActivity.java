@@ -28,9 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager pager;
-    private PagerAdapter pagerAdapter;
-
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
@@ -50,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
     }
 
     private void loadLoginPage(){
@@ -74,31 +69,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Loads the Fragment Slides
-    private void loadPagerPage(){
-        setContentView(R.layout.activity_main);
-        List<Fragment> list = new ArrayList<>();
-        list.add(new map_fragment());
-        list.add(new posts_fragment());
-
-        pager = findViewById(R.id.pager);
-        pagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), list);
-        pager.setAdapter(pagerAdapter);
-
-        loadFAB();
-    }
-
-    private void loadFAB(){
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Bring Up Camera", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -114,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+
+            // Load Pager
+            loadPagerPage();
         }
     }
 
@@ -131,5 +104,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void loadPagerPage(){
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(intent);
+    }
 
 }
