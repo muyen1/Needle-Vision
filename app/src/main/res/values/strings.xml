@@ -7,4 +7,12 @@
     <string name="filter">Filter</string>
     <string name="posts">Posts</string>
     <string name="user">User</string>
+    <string name="photo">Photo</string>
+    <string name="date">Date: </string>
+    <string name="time">Time: </string>
+    <string name="location">Location: </string>
+    <string name="status">Status: </string>
+    <string name="description">Description: </string>
+    <string name="active">Active</string>
+    <string name="disposed">Disposed</string>
 </resources>
