@@ -31,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
-    boolean signedIntoAppBefore;
 
     private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         if(account == null){
             loadLoginPage();
         } else {
-            signedIntoAppBefore = true;
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
             startActivity(intent);
@@ -71,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     
     private void loadLoginPage(){
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
         findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
 
             // Load the loadPagerPage function

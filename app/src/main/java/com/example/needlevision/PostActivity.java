@@ -56,9 +56,8 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-    private void loadImageDetails(){
-//        Intent intent = new Intent(PostActivity.this, );
-
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
 
