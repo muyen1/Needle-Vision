@@ -1,0 +1,4 @@
+#Tue Nov 17 17:10:39 PST 2020
+base.0=/Users/marknguyen/AndroidStudioProjects/Needle-Vision/NeedleVision/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
