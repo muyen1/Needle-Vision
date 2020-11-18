@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String photoPath;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
+    boolean signedIntoAppBefore;
 
     private GoogleMap mMap;
 
@@ -72,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account == null){
+            signedIntoAppBefore = false;
+        } else {
+            signedIntoAppBefore = true;
+            // Signed in successfully, show authenticated UI.
+            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
+            startActivity(intent);
+        }
+    }
+    
     private void loadLoginPage(){
         setContentView(R.layout.activity_login);
         findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
