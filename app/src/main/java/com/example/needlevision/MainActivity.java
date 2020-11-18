@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             signedIntoAppBefore = false;
         } else {
             signedIntoAppBefore = true;
+            // Signed in successfully, show authenticated UI.
+            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
+            startActivity(intent);
         }
     }
     
