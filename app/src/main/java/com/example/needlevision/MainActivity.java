@@ -1,5 +1,6 @@
 package com.example.needlevision;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
@@ -20,9 +21,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +56,12 @@ public class MainActivity extends AppCompatActivity {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("892938951159-0vupf97va7hukrr41e16qauu52tgkqht.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -61,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(account == null){
             signedIntoAppBefore = false;
         } else {
@@ -134,10 +146,11 @@ public class MainActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            firebaseAuthWithGoogle(account.getIdToken());
 
-            // Signed in successfully, show authenticated UI.
-            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
-            startActivity(intent);
+//            // Signed in successfully, show authenticated UI.
+//            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
+//            startActivity(intent);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -145,5 +158,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("Success", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Signed in successfully, show authenticated UI.
+                            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
+                            startActivity(intent);                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Error", "signInWithCredential:failure", task.getException());
+                        }
 
+                        // ...
+                    }
+                });
+    }
 }
