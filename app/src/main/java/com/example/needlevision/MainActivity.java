@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         if(account == null){
             loadLoginPage();
         } else {
+            signedIntoAppBefore = true;
+            // Signed in successfully, show authenticated UI.
+            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
+            startActivity(intent);
             loadPagerPage();
         }
     }
