@@ -94,7 +94,7 @@ public class PostLoginActivity extends AppCompatActivity {
     }
 
     private void upload(String path){
-        Uri file = Uri.fromFile(new File(path);
+        Uri file = Uri.fromFile(new File(path));
         uploadTask = storageRef.putFile(file);
 
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
