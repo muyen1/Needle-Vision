@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLoginPage();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
     }
 
     @Override
@@ -56,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         if(account == null){
-            signedIntoAppBefore = false;
+            loadLoginPage();
         } else {
-            signedIntoAppBefore = true;
+            loadPagerPage();
         }
     }
     

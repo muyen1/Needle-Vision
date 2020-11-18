@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.needlevision.adapters.SlidePagerAdapter;
 import com.example.needlevision.fragments.map_fragment;
@@ -26,6 +29,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        loadFAB();
         loadPagerPage();
     }
 
@@ -38,8 +42,6 @@ public class PostActivity extends AppCompatActivity {
         pager = findViewById(R.id.pager);
         pagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), list);
         pager.setAdapter(pagerAdapter);
-
-        loadFAB();
     }
 
     private void loadFAB(){
@@ -55,7 +57,9 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void loadImageDetails(){
-//        Intent intent =new Intent(PostActivity.this, );
+//        Intent intent = new Intent(PostActivity.this, );
 
     }
+
+
 }

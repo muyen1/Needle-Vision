@@ -3,4 +3,8 @@
     <string name="guest">Guest</string>
     <string name="login">Login</string>
     <string name="camera">Camera</string>
+    <string name="map">Map</string>
+    <string name="filter">Filter</string>
+    <string name="posts">Posts</string>
+    <string name="user">User</string>
 </resources>

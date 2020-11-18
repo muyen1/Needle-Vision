@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class map_fragment extends Fragment implements OnMapReadyCallback {
@@ -77,6 +80,8 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.map_page,container,false);
         // ask for location permission
         getLocationPermission();
+        setFilterBtn(rootView);
+
         postsList = rootView.findViewById(R.id.lvOffices);
         return rootView;
     }
@@ -169,5 +174,17 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    private void setFilterBtn(View view){
+        ImageButton btn = view.findViewById(R.id.filter_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Filter", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+            }
+        });
     }
 }

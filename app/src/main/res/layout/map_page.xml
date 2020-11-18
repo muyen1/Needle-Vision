@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetEnd="10dp"
+        app:contentInsetStart="10dp"
+        android:background="@color/colorGreen">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/map"
+                android:textSize="30sp">
+            </TextView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/filter_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="fitXY"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/user"
+                android:src="@drawable/filter"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <fragment
         android:id="@+id/map_frag"
@@ -11,19 +49,12 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         tools:context=".fragments.google_maps" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/startBtn"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="300dp"
-        android:visibility="invisible"
-        android:text="Start" />
+
     <ListView
         android:id="@+id/lvOffices"
-        android:layout_below="@+id/map_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/map_frag"
         android:divider="@color/divider"
         android:dividerHeight="2px" />
-</RelativeLayout>
+</LinearLayout>
