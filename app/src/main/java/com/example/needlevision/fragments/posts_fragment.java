@@ -74,12 +74,12 @@ public class posts_fragment extends Fragment {
     private ArrayList<Post> dummy(){
         ArrayList<Post> postsList = new ArrayList<>();
 
-        postsList.add(new Post(false,"Nov 1 2020", "4:20 pm" ,"123 Vancouver St.",  null));
-        postsList.add(new Post(true,"Nov 5 2020", "1:50 am" ,"345 Burnaby St.",  "somewhere"));
-        postsList.add(new Post(true,"Nov 10 2020", "6:40 pm" ,"245 Richmond St.",  "Under the tree"));
-        postsList.add(new Post(false,"Nov 15 2020", "12:02 pm" ,"777 Port Moody St.", "on the Bench"));
-        postsList.add(new Post(false,"Nov 10 2020", "3:30 pm" ,"245 Whistler St.",  "on the tree"));
-        postsList.add(new Post(false,"Nov 20 2020", "11:12 pm" ,"777 Coquitlam St.", "beach"));
+//        postsList.add(new Post(false,"Nov 1 2020", "4:20 pm" ,"123 Vancouver St.",  null));
+//        postsList.add(new Post(true,"Nov 5 2020", "1:50 am" ,"345 Burnaby St.",  "somewhere"));
+//        postsList.add(new Post(true,"Nov 10 2020", "6:40 pm" ,"245 Richmond St.",  "Under the tree"));
+//        postsList.add(new Post(false,"Nov 15 2020", "12:02 pm" ,"777 Port Moody St.", "on the Bench"));
+//        postsList.add(new Post(false,"Nov 10 2020", "3:30 pm" ,"245 Whistler St.",  "on the tree"));
+//        postsList.add(new Post(false,"Nov 20 2020", "11:12 pm" ,"777 Coquitlam St.", "beach"));
 
         return postsList;
     }
