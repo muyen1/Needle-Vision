@@ -154,6 +154,13 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
             public void onClick(View v) {
 
                 Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LENGTH_SHORT).show();
+                String description = et_description.getText().toString();
+
+                    eBody = "Date: " + date + "\n\n";
+                eBody +="Lat: " + latitude + "\n";
+                eBody +="Long: " + longitude + "\n\n";
+                eBody += "Description: \n";
+                eBody += description + "\n\n";
 
                 new Thread(new Runnable() {
 
@@ -171,9 +178,9 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
 
                 }).start();
 
-
-                String description = et_description.getText().toString();
                 db.upload(photoPath, description, date, latitude, longitude);
+
+
                 setResult(RESULT_OK);
                 finish();
             }
