@@ -128,15 +128,15 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         longs = getArguments().getDoubleArray("lngs");
         imageurls = getArguments().getStringArrayList("imageurls");
 
-        for(int i = 0; i < statuss.size(); i++) {
-            Log.d("Success", "userid is: " + userIds.get(i));
-            Log.d("Success", "desc is: " + dess.get(i));
-            Log.d("Success", "status is: " + statuss.get(i));
-            Log.d("Success", "date is: " + dates.get(i));
-            Log.d("Success", "latitude is: " + lats[i]);
-            Log.d("Success", "longitude is: " + longs[i]);
-            Log.d("Success", "imageurl is: " + imageurls.get(i));
-        }
+//        for(int i = 0; i < statuss.size(); i++) {
+//            Log.d("Success", "userid is: " + userIds.get(i));
+//            Log.d("Success", "desc is: " + dess.get(i));
+//            Log.d("Success", "status is: " + statuss.get(i));
+//            Log.d("Success", "date is: " + dates.get(i));
+//            Log.d("Success", "latitude is: " + lats[i]);
+//            Log.d("Success", "longitude is: " + longs[i]);
+//            Log.d("Success", "imageurl is: " + imageurls.get(i));
+//        }
 
         // ask for location permission
         getLocationPermission();
