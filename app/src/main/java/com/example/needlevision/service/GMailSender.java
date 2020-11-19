@@ -9,18 +9,25 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
     private Session session;
+
+    private Multipart _multipart;
 
     static {
         Security.addProvider(new com.example.needlevision.service.JSSEProvider());
@@ -29,6 +36,9 @@ public class GMailSender extends javax.mail.Authenticator {
     public GMailSender(String user, String password) {
         this.user = user;
         this.password = password;
+
+
+        _multipart = new MimeMultipart();
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
@@ -48,13 +58,19 @@ public class GMailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
+    public synchronized void sendMail(String subject, String body, String sender, String recipients, String photoPath) throws Exception {
+
+        addAttachment(photoPath,"subject");
+
         try{
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
             message.setSender(new InternetAddress(sender));
             message.setSubject(subject);
             message.setDataHandler(handler);
+
+            message.setContent(_multipart);
+
             if (recipients.indexOf(',') > 0)
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
             else
@@ -64,6 +80,23 @@ public class GMailSender extends javax.mail.Authenticator {
 
         }
     }
+
+    public void addAttachment(String filename,String subject) throws Exception {
+        BodyPart messageBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(filename);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(filename);
+        _multipart.addBodyPart(messageBodyPart);
+
+        BodyPart messageBodyPart2 = new MimeBodyPart();
+        messageBodyPart2.setText(subject);
+
+        _multipart.addBodyPart(messageBodyPart2);
+    }
+
+
+
+
 
     public class ByteArrayDataSource implements DataSource {
         private byte[] data;

@@ -85,8 +85,8 @@ public class PhotoActivity extends AppCompatActivity {
                         try {
                             GMailSender sender = new GMailSender("comp7082group1@gmail.com",
                                     "lol12345LOL");
-                            sender.sendMail("Hello from JavaMail", "Body from JavaMail",
-                                    "comp7082group1@gmail.com", "comp7082group1@gmail.com");
+                            sender.sendMail("Needle-Vision", "Needle-Vision body",
+                                    "comp7082group1@gmail.com", "comp7082group1@gmail.com", photoPath);
                         } catch (Exception e) {
                             Log.e("SendMail", e.getMessage(), e);
                         }
