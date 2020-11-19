@@ -96,7 +96,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         eSubject = "email Subject";
         eBody = "email body";
         eRecipients = "comp7082group1@gmail.com";
-
+        eSender = "comp7082group1@gmail.com";
         eUsername = "comp7082group1@gmail.com";
         ePassword = "lol12345LOL";
         
@@ -153,10 +153,11 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),photoPath,Toast.LENGTH_SHORT).show();
+
                 String description = et_description.getText().toString();
 
-                    eBody = "Date: " + date + "\n\n";
+                eBody = "Date: " + date + "\n\n";
                 eBody +="Lat: " + latitude + "\n";
                 eBody +="Long: " + longitude + "\n\n";
                 eBody += "Description: \n";
@@ -178,7 +179,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
 
                 }).start();
 
-                db.upload(photoPath, description, date, latitude, longitude);
+                //db.upload(photoPath, description, date, latitude, longitude);
 
 
                 setResult(RESULT_OK);
@@ -186,6 +187,8 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
             }
         });
     }
+
+
 
     public void initLocation(){
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -200,6 +203,16 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
     public void onLocationChanged(Location location) {
         if (location != null) {
         }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
     }
 
     public void onProviderDisabled(String provider) {

@@ -1,5 +1,7 @@
 package com.example.needlevision.service;
 
+import android.util.Log;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
@@ -59,14 +62,13 @@ public class GMailSender extends javax.mail.Authenticator {
     }
 
     public synchronized void sendMail(String subject, String body, String sender, String recipients, String photoPath) throws Exception {
+            addAttachment( photoPath, body);
 
-        addAttachment(photoPath,"picture");
-
-        try{
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
             message.setSender(new InternetAddress(sender));
             message.setSubject(subject);
+            message.setText(body);
             message.setDataHandler(handler);
 
             message.setContent(_multipart);
@@ -75,10 +77,9 @@ public class GMailSender extends javax.mail.Authenticator {
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
             else
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
-            Transport.send(message);
-        }catch(Exception e){
 
-        }
+            Transport.send(message);
+
     }
 
     public void addAttachment(String filename,String subject) throws Exception {
