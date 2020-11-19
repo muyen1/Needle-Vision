@@ -1,15 +1,12 @@
 package com.example.needlevision.fragments;
 
-        import android.content.Context;
         import android.os.Bundle;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.Menu;
         import android.view.MenuInflater;
         import android.view.MenuItem;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.ImageButton;
         import android.widget.ListView;
 
         import androidx.annotation.NonNull;
@@ -62,11 +59,11 @@ public class posts_fragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-        if (id == R.id.filter_btn){
+        if (id == R.id.filter_option_btn){
             Snackbar.make(context, "Filter", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
-        } else if (id == R.id.logout_btn){
+        } else if (id == R.id.logout_option_btn){
             Snackbar.make(context, "Logout", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }

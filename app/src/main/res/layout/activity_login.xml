@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="274dp"
         android:layout_marginTop="100dp"
-        app:srcCompat="@drawable/nv_logo" />
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="Logo" />
 
     <TextView
         android:layout_width="wrap_content"
