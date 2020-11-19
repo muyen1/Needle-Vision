@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/options_btn"
+        android:icon="@drawable/option"
+        android:title="Options"
+        app:showAsAction="ifRoom">
+        <menu>
+<!--            <item-->
+<!--            android:id="@+id/filter_option_btn"-->
+<!--            android:title="Filter"-->
+<!--            app:showAsAction="ifRoom"/>-->
+
+            <item
+                android:id="@+id/logout_option_btn"
+                android:title="Logout"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+
+</menu>

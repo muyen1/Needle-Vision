@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+<!--    Distance-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/distance"
+            android:layout_marginTop="25dp"
+            android:textSize="30sp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/distance_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="0 km">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/distance_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:max="100"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--    Status-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:layout_marginTop="25dp"
+            android:textSize="30sp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/active"
+                android:textSize="20sp"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/disposed_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/disposed"
+                android:textSize="20sp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginStart="70dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+        <Button
+            android:id="@+id/filter_return_btn"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center|bottom"
+            android:background="@color/colorGreen"
+            android:text="@string/filter"
+            android:textColor="@color/white">
+        </Button>
+
+
+</LinearLayout>

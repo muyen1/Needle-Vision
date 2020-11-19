@@ -1,14 +1,17 @@
 package com.example.needlevision.fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +19,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.example.needlevision.Filter;
+import com.example.needlevision.Post;
+import com.example.needlevision.PostActivity;
 import com.example.needlevision.R;
+import com.example.needlevision.adapters.PostListAdapter;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,9 +34,16 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class map_fragment extends Fragment implements OnMapReadyCallback {
+    private static final int FILTER_ID = 9808;
+
     private static final String TAG = "Map Fragment";
     //// the map
     private GoogleMap mMap;
@@ -49,6 +64,9 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     // posts listing
     private ListView postsList;
 
+    // map distance
+    private int distance = 0;
+    ViewGroup context;
 
     // when map is ready
     @Override
@@ -75,10 +93,62 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.map_page,container,false);
+        context = rootView;
+
         // ask for location permission
         getLocationPermission();
+
+        // List View
         postsList = rootView.findViewById(R.id.lvOffices);
+        // Make array of posts Here
+//        ArrayList<Post> postArrayList = dummy();
+
+//        PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.post_layout, postArrayList);
+//        postsList.setAdapter(adapter);
+
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == FILTER_ID) {
+            if (resultCode == RESULT_OK) {
+                // Update Map Pins
+                distance = data.getIntExtra("distance", distance);
+                Snackbar.make(context, "Filter: "+ distance, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+
+            }
+        }
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.map_menu, menu);
+        ((PostActivity) getActivity()).setActionBarTitle("Map");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.filter_option_btn){
+            Intent filter = new Intent(getActivity(), Filter.class);
+            filter.putExtra("distance", distance);
+            startActivityForResult(filter, FILTER_ID);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // initiating the map
@@ -170,4 +240,5 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
             }
         }
     }
+
 }
