@@ -1,5 +1,6 @@
 package com.example.needlevision.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,8 +17,15 @@ import androidx.fragment.app.Fragment;
 import com.example.needlevision.Post;
 import com.example.needlevision.PostActivity;
 import com.example.needlevision.R;
+import com.example.needlevision.adapters.PostListAdapter;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class posts_fragment extends Fragment {
 
@@ -30,6 +38,10 @@ public class posts_fragment extends Fragment {
     double lats[];
     double longs[];
     ArrayList<String> imageurls;
+    // posts listing
+    private ListView postsList;
+    // list of posts
+    List<Post> listPosts;
 
     @Nullable
     @Override
@@ -37,6 +49,9 @@ public class posts_fragment extends Fragment {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.posts_page,container,false);
 
         context = rootView;
+        // initiating list view
+        postsList = context.findViewById(R.id.postPageList);
+        listPosts = new ArrayList<>();
 
         // firebase date
         // finally got the data here
@@ -47,6 +62,18 @@ public class posts_fragment extends Fragment {
         lats = getArguments().getDoubleArray("lats");
         longs = getArguments().getDoubleArray("lngs");
         imageurls = getArguments().getStringArrayList("imageurls");
+
+        for (int i = 0; i < statuss.size(); i++) {
+            Post pt;
+            // getting the logLat
+            LatLng ptLatlng = new LatLng(lats[i], longs[i]);
+            pt = new Post(userIds.get(i), dess.get(i), statuss.get(i),
+                    dates.get(i), lats[i], longs[i], imageurls.get(i));
+            listPosts.add(pt);
+        }
+        // constructing posts adapter
+        PostListAdapter adapter = new PostListAdapter(getActivity(), listPosts);
+        postsList.setAdapter(adapter);
 
         return rootView;
     }
@@ -80,4 +107,5 @@ public class posts_fragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
