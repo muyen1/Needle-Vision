@@ -14,7 +14,7 @@
         tools:context=".fragments.google_maps" />
 
     <ListView
-        android:id="@+id/lvOffices"
+        android:id="@+id/lvPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/map_frag"

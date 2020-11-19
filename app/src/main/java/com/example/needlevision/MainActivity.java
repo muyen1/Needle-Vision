@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
 
-    private GoogleMap mMap;
-
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private StorageReference storageRef;

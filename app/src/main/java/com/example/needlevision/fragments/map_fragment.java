@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -26,17 +27,26 @@ import com.example.needlevision.PostActivity;
 import com.example.needlevision.R;
 import com.example.needlevision.adapters.PostListAdapter;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -63,6 +73,18 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     private LatLng currentLatLng;
     // posts listing
     private ListView postsList;
+    // list of posts
+    List<Post> listPosts;
+    // data
+    ArrayList<String> userIds;
+    ArrayList<String> dess;
+    ArrayList<String> statuss;
+    ArrayList<String> dates;
+    double lats[];
+    double longs[];
+    ArrayList<String> imageurls;
+    // markers for selected post
+    Marker markers[];
 
     // map distance
     private int distance = 0;
@@ -94,17 +116,30 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.map_page,container,false);
         context = rootView;
+        // initiating list view
+        postsList = context.findViewById(R.id.lvPosts);
+        listPosts = new ArrayList<>();
+        // finally got the data here
+        userIds = getArguments().getStringArrayList("userIds");
+        dess = getArguments().getStringArrayList("dess");
+        statuss = getArguments().getStringArrayList("statuss");
+        dates = getArguments().getStringArrayList("dates");
+        lats = getArguments().getDoubleArray("lats");
+        longs = getArguments().getDoubleArray("lngs");
+        imageurls = getArguments().getStringArrayList("imageurls");
+
+        for(int i = 0; i < statuss.size(); i++) {
+            Log.d("Success", "userid is: " + userIds.get(i));
+            Log.d("Success", "desc is: " + dess.get(i));
+            Log.d("Success", "status is: " + statuss.get(i));
+            Log.d("Success", "date is: " + dates.get(i));
+            Log.d("Success", "latitude is: " + lats[i]);
+            Log.d("Success", "longitude is: " + longs[i]);
+            Log.d("Success", "imageurl is: " + imageurls.get(i));
+        }
 
         // ask for location permission
         getLocationPermission();
-
-        // List View
-        postsList = rootView.findViewById(R.id.lvOffices);
-        // Make array of posts Here
-//        ArrayList<Post> postArrayList = dummy();
-
-//        PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.post_layout, postArrayList);
-//        postsList.setAdapter(adapter);
 
         return rootView;
     }
@@ -139,6 +174,39 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    // set markers on map
+    private void generateMarks() {
+        // list item listener after user choose a post
+        postsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mMap.clear();
+                // getting the logLat
+                LatLng ptLatlng = new LatLng(listPosts.get(position).getLatitude(), listPosts.get(position).getLongitude());
+                setMarks(currentLatLng, ptLatlng, listPosts.get(position).getDescription());
+            }
+        });
+        for (int i = 0; i < statuss.size(); i++) {
+            Post pt;
+            // getting the logLat
+            LatLng ptLatlng = new LatLng(lats[i], longs[i]);
+            pt = new Post(userIds.get(i), dess.get(i), statuss.get(i),
+                        dates.get(i), lats[i], longs[i], imageurls.get(i));
+            pt.setDistance(CalculationByDistance(currentLatLng, ptLatlng));
+            listPosts.add(pt);
+        }
+        // sort the list by distance
+        Collections.sort(listPosts, new Comparator<Post>() {
+            @Override
+            public int compare(Post p1, Post p2) {
+                return Double.compare(p1.getDistance(), p2.getDistance());
+            }
+        });
+        // constructing posts adapter
+        PostListAdapter adapter = new PostListAdapter(getActivity(), listPosts);
+        postsList.setAdapter(adapter);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -159,6 +227,34 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(map_fragment.this);
     }
 
+    // show the current location and the selected post markers
+    private void setMarks(LatLng start, LatLng end, String des) {
+        markers = new Marker[2];
+        // call showRouting()
+        // showRouting(new MarkerOptions().position(start), new MarkerOptions().position(end));
+        // add marker on map
+        markers[0]= mMap.addMarker(new MarkerOptions().position(start).title("You are here!").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        markers[1] = mMap.addMarker(new MarkerOptions().position(end).title(des));
+        markers[1].showInfoWindow();
+        // auto move the camera to cover two locations
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (Marker marker : markers) {
+            builder.include(marker.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+        int padding = 200; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        mMap.animateCamera(cu);
+    }
+
+    // calculate the distance between each post to the current location
+    private double CalculationByDistance(LatLng StartP, LatLng EndP) {
+        float results[] = new float[1000];
+        Location.distanceBetween(StartP.latitude, StartP.longitude, EndP.latitude, EndP.longitude, results);
+        return Double.parseDouble(new DecimalFormat("0.#").format(results[0] / 1000));
+    }
+
+
     // get the Device current location
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
@@ -175,7 +271,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                             currentLocation = (Location) task.getResult();
                             currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             moveCamera(currentLatLng, 13);
-                            // generateMarks();
+                            generateMarks();
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
                         }
