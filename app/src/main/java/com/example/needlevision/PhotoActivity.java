@@ -199,15 +199,40 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-
+        Toast.makeText(this, "toast",
+                Toast.LENGTH_LONG).show();
         if (id == R.id.photo_send_btn){
             String description = et_description.getText().toString();
+
+            eBody = "Date: " + date + "\n\n";
+            eBody +="Lat: " + latitude + "\n";
+            eBody +="Long: " + longitude + "\n\n";
+            eBody += "Description: \n";
+            eBody += description + "\n\n";
+
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        GMailSender sender = new GMailSender(eUsername,
+                                ePassword);
+                        sender.sendMail(eSubject, eBody,
+                                eSender, eRecipients, photoPath);
+                    } catch (Exception e) {
+                        Log.e("SendMail", e.getMessage(), e);
+                    }
+                }
+
+            }).start();
+
             db.upload(photoPath, description, date, latitude, longitude);
             setResult(RESULT_OK);
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
