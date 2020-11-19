@@ -2,6 +2,7 @@ package com.example.needlevision;
 
 public class Post {
 
+
     private String userID;
     private String description;
     private String status;
@@ -54,6 +55,7 @@ public class Post {
 
     public void setUserID(String userID) {
         this.userID = userID;
+
     }
 
     public void setDescription(String description) {
