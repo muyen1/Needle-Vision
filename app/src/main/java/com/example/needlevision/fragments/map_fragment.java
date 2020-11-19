@@ -100,25 +100,13 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
 
         // List View
         postsList = rootView.findViewById(R.id.lvOffices);
-        ArrayList<Post> postArrayList = dummy();
+        // Make array of posts Here
+//        ArrayList<Post> postArrayList = dummy();
 
-        PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.post_layout, postArrayList);
-        postsList.setAdapter(adapter);
+//        PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.post_layout, postArrayList);
+//        postsList.setAdapter(adapter);
 
         return rootView;
-    }
-
-    private ArrayList<Post> dummy(){
-        ArrayList<Post> postsList = new ArrayList<>();
-//
-//        postsList.add(new Post(false,"Nov 1 2020", "4:20 pm" ,"123 Vancouver St.",  null));
-//        postsList.add(new Post(true,"Nov 5 2020", "1:50 am" ,"345 Burnaby St.",  "somewhere"));
-//        postsList.add(new Post(true,"Nov 10 2020", "6:40 pm" ,"245 Richmond St.",  "Under the tree"));
-//        postsList.add(new Post(false,"Nov 15 2020", "12:02 pm" ,"777 Port Moody St.", "on the Bench"));
-//        postsList.add(new Post(false,"Nov 10 2020", "3:30 pm" ,"245 Whistler St.",  "on the tree"));
-//        postsList.add(new Post(false,"Nov 20 2020", "11:12 pm" ,"777 Coquitlam St.", "beach"));
-
-        return postsList;
     }
 
     @Override
@@ -128,7 +116,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         if (requestCode == FILTER_ID) {
             if (resultCode == RESULT_OK) {
                 // Update Map Pins
-                distance = data.getIntExtra("distance", 0);
+                distance = data.getIntExtra("distance", distance);
                 Snackbar.make(context, "Filter: "+ distance, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
@@ -159,9 +147,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
             Intent filter = new Intent(getActivity(), Filter.class);
             filter.putExtra("distance", distance);
             startActivityForResult(filter, FILTER_ID);
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

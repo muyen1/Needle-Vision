@@ -23,7 +23,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Filter"></activity>
+        <activity
+            android:name=".Filter"
+            android:parentActivityName=".PostActivity">
+        </activity>
         <activity android:name=".PostActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -44,8 +47,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoActivity"
-            android:label="Needle Vision" />
+        <activity
+            android:name=".PhotoActivity"
+            android:label="Needle Vision"
+            android:parentActivityName=".PostActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

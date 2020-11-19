@@ -19,6 +19,7 @@ public class Filter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SeekBar bar = findViewById(R.id.distance_slider);
         Intent i = getIntent();

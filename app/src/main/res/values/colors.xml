@@ -9,5 +9,7 @@
     <color name ="divider">#FF9900</color>
     <color name="colorWarning">#D42E47</color>
     <color name="colorNull">#595959</color>
+    <color name="imageBackground">#101010</color>
+
 
 </resources>
