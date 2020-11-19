@@ -45,6 +45,14 @@ public class PhotoActivity extends AppCompatActivity {
     String sEmail;
     String sPassword ;
 
+    String eSubject;
+    String eBody;
+    String eRecipients;
+    String eSender;
+
+    String eUsername;
+    String ePassword;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,12 @@ public class PhotoActivity extends AppCompatActivity {
        // sEmail  = "comp7082group1@gmail.com";
        // sPassword = "lol12345LOL";
 
+        eSubject = "email Subject";
+        eBody = "email body";
+        eRecipients = "comp7082group1@gmail.com";
+
+        eUsername = "comp7082group1@gmail.com";
+        ePassword = "lol12345LOL";
 
         btn_back = findViewById(R.id.btn_back);
         btn_upload = findViewById(R.id.btn_upload);
@@ -83,10 +97,10 @@ public class PhotoActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            GMailSender sender = new GMailSender("comp7082group1@gmail.com",
-                                    "lol12345LOL");
-                            sender.sendMail("Needle-Vision", "Needle-Vision body",
-                                    "comp7082group1@gmail.com", "comp7082group1@gmail.com", photoPath);
+                            GMailSender sender = new GMailSender(eUsername,
+                                    ePassword);
+                            sender.sendMail(eSubject, eBody,
+                                    eSender, eRecipients, photoPath);
                         } catch (Exception e) {
                             Log.e("SendMail", e.getMessage(), e);
                         }

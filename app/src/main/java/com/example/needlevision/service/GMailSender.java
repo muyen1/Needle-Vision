@@ -60,7 +60,7 @@ public class GMailSender extends javax.mail.Authenticator {
 
     public synchronized void sendMail(String subject, String body, String sender, String recipients, String photoPath) throws Exception {
 
-        addAttachment(photoPath,"subject");
+        addAttachment(photoPath,"picture");
 
         try{
             MimeMessage message = new MimeMessage(session);
