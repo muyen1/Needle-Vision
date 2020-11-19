@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "892938951159",
+    "firebase_url": "https://needlevision-1605595310751.firebaseio.com",
+    "project_id": "needlevision-1605595310751",
+    "storage_bucket": "needlevision-1605595310751.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892938951159:android:632cf537a9056935af36f2",
+        "android_client_info": {
+          "package_name": "com.example.needlevision"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892938951159-ppmqo6dlurbb87v5a81lbonsskbi9lle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.needlevision",
+            "certificate_hash": "f41c5bb6750fbde2a2b8c7029739fa4f61000c90"
+          }
+        },
+        {
+          "client_id": "892938951159-0vupf97va7hukrr41e16qauu52tgkqht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDljxONauqraVjSxUd8pIPa-c94XqHNZaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892938951159-0vupf97va7hukrr41e16qauu52tgkqht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

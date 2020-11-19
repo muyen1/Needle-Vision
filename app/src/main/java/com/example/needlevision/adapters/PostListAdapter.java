@@ -34,29 +34,29 @@ public class PostListAdapter extends ArrayAdapter<Post> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        boolean status = getItem(position).isDisposed();
-        String date = getItem(position).getDate();
-        String time = getItem(position).getTime();
-        String location = getItem(position).getLocation();
-        String description = getItem(position).getDescription();
-
-        Post post = new Post(status, date, time, location, description);
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(resource, parent, false);
-
-        // Needle still active
-        if (status){
-            ((TextView)convertView.findViewById(R.id.post_status)).setText(R.string.disposed);
-            ((TextView)convertView.findViewById(R.id.post_status)).setTextColor(ContextCompat.getColor(context, R.color.colorNull));
-        } else{
-            ((TextView)convertView.findViewById(R.id.post_status)).setText(R.string.active);
-            ((TextView)convertView.findViewById(R.id.post_status)).setTextColor(ContextCompat.getColor(context, R.color.colorWarning));
-        }
-        ((TextView)convertView.findViewById(R.id.post_date)).setText(date);
-        ((TextView)convertView.findViewById(R.id.post_time)).setText(time);
-        ((TextView)convertView.findViewById(R.id.post_location)).setText(location);
-        ((TextView)convertView.findViewById(R.id.post_description)).setText(description);
+//        boolean status = getItem(position).isDisposed();
+//        String date = getItem(position).getDate();
+//        String time = getItem(position).getTime();
+//        String location = getItem(position).getLocation();
+//        String description = getItem(position).getDescription();
+//
+//        //Post post = new Post(status, date, time, location, description);
+//
+//        LayoutInflater inflater = LayoutInflater.from(context);
+//        convertView = inflater.inflate(resource, parent, false);
+//
+//        // Needle still active
+//        if (status){
+//            ((TextView)convertView.findViewById(R.id.post_status)).setText(R.string.disposed);
+//            ((TextView)convertView.findViewById(R.id.post_status)).setTextColor(ContextCompat.getColor(context, R.color.colorNull));
+//        } else{
+//            ((TextView)convertView.findViewById(R.id.post_status)).setText(R.string.active);
+//            ((TextView)convertView.findViewById(R.id.post_status)).setTextColor(ContextCompat.getColor(context, R.color.colorWarning));
+//        }
+//        ((TextView)convertView.findViewById(R.id.post_date)).setText(date);
+//        ((TextView)convertView.findViewById(R.id.post_time)).setText(time);
+//        ((TextView)convertView.findViewById(R.id.post_location)).setText(location);
+//        ((TextView)convertView.findViewById(R.id.post_description)).setText(description);
 
         return convertView;
     }
