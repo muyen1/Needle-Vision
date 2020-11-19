@@ -103,3 +103,5 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+*.lock
+.idea/caches/build_file_checksums.ser

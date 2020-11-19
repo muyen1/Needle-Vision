@@ -51,10 +51,7 @@ dependencies {
     // Declare the dependency for the Realtime Database library
     implementation 'com.google.firebase:firebase-database'
 
-
     // Add the dependencies for the desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
-
-
-
 }
+task prepareKotlinBuildScriptModel {}

@@ -1,6 +1,7 @@
 package com.example.needlevision.fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.needlevision.Filter;
 import com.example.needlevision.Post;
 import com.example.needlevision.PostActivity;
 import com.example.needlevision.R;
@@ -46,8 +48,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class map_fragment extends Fragment implements OnMapReadyCallback {
+    private static final int FILTER_ID = 9808;
+
     private static final String TAG = "Map Fragment";
     //// the map
     private GoogleMap mMap;
@@ -80,6 +86,8 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     // markers for selected post
     Marker markers[];
 
+    // map distance
+    private int distance = 0;
     ViewGroup context;
 
     // when map is ready
@@ -120,20 +128,43 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         longs = getArguments().getDoubleArray("lngs");
         imageurls = getArguments().getStringArrayList("imageurls");
 
-//        for(int i = 0; i < statuss.size(); i++) {
-//            Log.d("Success", "userid is: " + userIds.get(i));
-//            Log.d("Success", "desc is: " + dess.get(i));
-//            Log.d("Success", "status is: " + statuss.get(i));
-//            Log.d("Success", "date is: " + dates.get(i));
-//            Log.d("Success", "latitude is: " + lats[i]);
-//            Log.d("Success", "longitude is: " + longs[i]);
-//            Log.d("Success", "imageurl is: " + imageurls.get(i));
-//        }
+        for(int i = 0; i < statuss.size(); i++) {
+            Log.d("Success", "userid is: " + userIds.get(i));
+            Log.d("Success", "desc is: " + dess.get(i));
+            Log.d("Success", "status is: " + statuss.get(i));
+            Log.d("Success", "date is: " + dates.get(i));
+            Log.d("Success", "latitude is: " + lats[i]);
+            Log.d("Success", "longitude is: " + longs[i]);
+            Log.d("Success", "imageurl is: " + imageurls.get(i));
+        }
 
         // ask for location permission
         getLocationPermission();
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == FILTER_ID) {
+            if (resultCode == RESULT_OK) {
+                // Update Map Pins
+                distance = data.getIntExtra("distance", distance);
+                Snackbar.make(context, "Filter: "+ distance, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+
+            }
+        }
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -180,11 +211,11 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-        if (id == R.id.logout_btn){
-            Snackbar.make(context, "Filter", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+        if (id == R.id.filter_option_btn){
+            Intent filter = new Intent(getActivity(), Filter.class);
+            filter.putExtra("distance", distance);
+            startActivityForResult(filter, FILTER_ID);
         }
-
         return super.onOptionsItemSelected(item);
     }
 

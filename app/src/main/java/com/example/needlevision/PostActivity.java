@@ -224,6 +224,7 @@ public class PostActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         photoPath = image.getAbsolutePath();
+        Log.i("photopath", photoPath);
         return image;
     }
 

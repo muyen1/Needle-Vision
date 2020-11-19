@@ -34,7 +34,7 @@ public class PostListAdapter extends ArrayAdapter<Post> {
 
     // activity instance
     private Activity context;
-    // list of offices
+    // list of posts
     private List<Post> postsList;
 
     ImageView img;
@@ -74,7 +74,7 @@ public class PostListAdapter extends ArrayAdapter<Post> {
 
         if (pt.getDate().length() > 10) {
             date.setText(pt.getDate().substring(0, 10));
-            time.setText(pt.getDate().substring(11, pt.getDate().length() -1 ));
+            time.setText(pt.getDate().substring(11));
         } else {
             date.setText(pt.getDate().substring(0, 9));
             time.setText("No Time");
@@ -82,7 +82,7 @@ public class PostListAdapter extends ArrayAdapter<Post> {
 
         location.setText(pt.getLatitude() + ", " + pt.getLongitude());
         des.setText(pt.getDescription());
-        // set the office distance
+        // set the post distance
         dis.setText(pt.getDistance() + " km");
 
         return listViewItem;
