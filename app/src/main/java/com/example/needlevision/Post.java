@@ -1,57 +1,84 @@
 package com.example.needlevision;
 
 public class Post {
-    private boolean isDisposed = false;
+
+
+    private String userID;
+    private String description;
+    private String status;
     private String date;
-    private String time;
-    private String location;
-    private String description = null;
+    private double latitude;
+    private double longitude;
+    private String imageURL;
 
-    public Post(boolean isDisposed, String date, String time, String location,  String description) {
-        this.isDisposed = isDisposed;
-        this.date = date;
-        this.time = time;
-        this.location = location;
+    public Post() {
+        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+    }
+
+    public Post(String userID, String description, String status, String date, double latitude, double longitude, String imageURL){
+        this.userID = userID;
         this.description = description;
-    }
-
-    public boolean isDisposed() {
-        return isDisposed;
-    }
-
-    public void setDisposed(boolean disposed) {
-        isDisposed = disposed;
-    }
-
-    public void setDate(String date) {
+        this.status = status;
         this.date = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.imageURL = imageURL;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDate() {
-        return date;
+    public String getUserID() {
+        return userID;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
