@@ -2,6 +2,7 @@ package com.example.needlevision;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,11 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.example.needlevision.service.Database;
 
 import java.io.IOException;
@@ -30,8 +34,6 @@ import java.util.Calendar;
 public class PhotoActivity extends AppCompatActivity implements LocationListener {
 
     private String photoPath;
-    private ImageButton btn_back;
-    private ImageButton btn_upload;
     private ImageView imageView;
 
     private TextView label_date;
@@ -54,10 +56,10 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = new Database();
 
-        btn_back = findViewById(R.id.btn_back);
-        btn_upload = findViewById(R.id.btn_upload);
         imageView = findViewById(R.id.imageView);
         label_date = findViewById(R.id.label_date);
         tv_date = findViewById(R.id.tv_date);
@@ -91,26 +93,6 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
 
         String coordinates = Double.toString(latitude) + ", " + Double.toString(longitude);
         tv_location.setText(coordinates);
-
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
-
-        //This function probably needs to be expanded to include other functionality.
-        //Currently just returns to the main activity
-        btn_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String description = et_description.getText().toString();
-                db.upload(photoPath, description, date, latitude, longitude);
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
     }
 
     public void initLocation(){
@@ -151,4 +133,29 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
         imageView.setImageBitmap(bitmap);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.photo_menu, menu);
+        setActionBarTitle("Photo Details");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.photo_send_btn){
+            String description = et_description.getText().toString();
+            db.upload(photoPath, description, date, latitude, longitude);
+            setResult(RESULT_OK);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
 }
