@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/post_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="130dp"
         android:layout_weight="1.8"
         android:contentDescription="@string/photo"
         android:scaleType="centerCrop"
-        android:src="@drawable/gh">
+        android:src="@drawable/ic_launcher_foreground">
     </ImageView>
 
     <LinearLayout
@@ -23,6 +23,48 @@
         android:layout_marginLeft="15dp"
         android:layout_weight="1"
         android:orientation="vertical">
+
+        <!--        Location-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:layout_marginRight="@dimen/text_gap"
+                android:layout_marginEnd="@dimen/text_gap">
+            </TextView>
+
+            <TextView
+                android:id="@+id/post_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </LinearLayout>
+
+        <!--        Distance-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dis"
+                android:layout_marginRight="@dimen/text_gap"
+                android:layout_marginEnd="@dimen/text_gap">
+            </TextView>
+
+            <TextView
+                android:id="@+id/post_dis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </LinearLayout>
 
         <!--        Status-->
         <LinearLayout
@@ -43,6 +85,7 @@
                 android:layout_height="wrap_content">
             </TextView>
         </LinearLayout>
+
 
 
         <!--        Date-->
@@ -85,26 +128,6 @@
             </TextView>
         </LinearLayout>
 
-        <!--        Location-->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location"
-                android:layout_marginRight="@dimen/text_gap"
-                android:layout_marginEnd="@dimen/text_gap">
-            </TextView>
-
-            <TextView
-                android:id="@+id/post_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </TextView>
-        </LinearLayout>
 
         <!--        Description-->
         <LinearLayout

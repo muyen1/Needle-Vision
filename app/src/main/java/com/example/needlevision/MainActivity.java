@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     SignInButton signInButton;
 
-    private GoogleMap mMap;
-
     private FirebaseAuth mAuth;
     private String photoPath;
     private Calendar calendar;
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     UploadTask uploadTask;
 
     private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,33 +73,6 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        // Read from the database upon adding new entry (UPDATE POSTINGS HERE)
-        mDatabase.child("posts").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> postChildren = dataSnapshot.getChildren();
-                ArrayList<Post> posts = new ArrayList<>();
-                // DO STUFF IN THIS LOOP FOR EACH POST RETRIEVED
-                for (DataSnapshot post : postChildren) {
-                    Post p = post.getValue(Post.class);
-//                    Log.d("Success", "userid is: " + p.getUserID());
-//                    Log.d("Success", "desc is: " + p.getDescription());
-//                    Log.d("Success", "status is: " + p.getStatus());
-//                    Log.d("Success", "date is: " + p.getDate());
-//                    Log.d("Success", "latitude is: " + p.getLatitude());
-//                    Log.d("Success", "longitude is: " + p.getLongitude());
-//                    Log.d("Success", "imageurl is: " + p.getImageURL());
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Error", "Failed to read value.", error.toException());
-            }
-        });
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.example.needlevision;
 
 public class Post {
-
-
     private String userID;
     private String description;
     private String status;
@@ -10,6 +8,7 @@ public class Post {
     private double latitude;
     private double longitude;
     private String imageURL;
+    private double distance;
 
     public Post() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
@@ -55,7 +54,6 @@ public class Post {
 
     public void setUserID(String userID) {
         this.userID = userID;
-
     }
 
     public void setDescription(String description) {
@@ -81,4 +79,13 @@ public class Post {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+    // get post distance
+    public double getDistance() {
+        return distance;
+    }
+    // set post distance
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
 }

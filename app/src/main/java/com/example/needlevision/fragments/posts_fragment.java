@@ -1,32 +1,41 @@
 package com.example.needlevision.fragments;
 
-        import android.content.Context;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.Menu;
-        import android.view.MenuInflater;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageButton;
-        import android.widget.ListView;
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ListView;
 
-        import androidx.annotation.NonNull;
-        import androidx.annotation.Nullable;
-        import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-        import com.example.needlevision.Post;
-        import com.example.needlevision.PostActivity;
-        import com.example.needlevision.R;
-        import com.example.needlevision.adapters.PostListAdapter;
-        import com.google.android.material.snackbar.Snackbar;
+import com.example.needlevision.Post;
+import com.example.needlevision.PostActivity;
+import com.example.needlevision.R;
+import com.example.needlevision.adapters.PostListAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class posts_fragment extends Fragment {
 
     ViewGroup context;
+    // data
+    ArrayList<String> userIds;
+    ArrayList<String> dess;
+    ArrayList<String> statuss;
+    ArrayList<String> dates;
+    double lats[];
+    double longs[];
+    ArrayList<String> imageurls;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,12 +43,20 @@ public class posts_fragment extends Fragment {
 
         context = rootView;
 
+        // firebase date
+        // finally got the data here
+        userIds = getArguments().getStringArrayList("userIds");
+        dess = getArguments().getStringArrayList("dess");
+        statuss = getArguments().getStringArrayList("statuss");
+        dates = getArguments().getStringArrayList("dates");
+        lats = getArguments().getDoubleArray("lats");
+        longs = getArguments().getDoubleArray("lngs");
+        imageurls = getArguments().getStringArrayList("imageurls");
+
         // List View
         ListView postList = (ListView) rootView.findViewById(R.id.lvPosts);
         ArrayList<Post> postArrayList = dummy();
 
-        PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.post_layout, postArrayList);
-        postList.setAdapter(adapter);
 
         return rootView;
     }

@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,9 +25,15 @@ import com.example.needlevision.fragments.map_fragment;
 import com.example.needlevision.fragments.posts_fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,24 +47,98 @@ public class PostActivity extends AppCompatActivity {
 
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
+    // firebase Ref
+    private DatabaseReference mDatabase;
+    // arrayList for post data
+    private ArrayList<String> userIdLt;
+    private ArrayList<String> desLt;
+    private ArrayList<String> statusLt;
+    private ArrayList<String> dateLt;
+    private ArrayList<Double> latLt;
+    private ArrayList<Double> lngLt;
+    private ArrayList<String> imageurlLt;
+    // data sets
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        // Read from the database upon adding new entry (UPDATE POSTINGS HERE)
+        mDatabase.child("posts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> postChildren = dataSnapshot.getChildren();
+                // initiating arraylists
+                userIdLt = new ArrayList<>();
+                desLt = new ArrayList<>();
+                statusLt = new ArrayList<>();
+                dateLt = new ArrayList<>();
+                latLt = new ArrayList<>();
+                lngLt = new ArrayList<>();
+                imageurlLt = new ArrayList<>();
+                // DO STUFF IN THIS LOOP FOR EACH POST RETRIEVED
+                for (DataSnapshot post : postChildren) {
+                    Post p = post.getValue(Post.class);
+//                    Log.d("Success", "userid is: " + p.getUserID());
+//                    Log.d("Success", "desc is: " + p.getDescription());
+//                    Log.d("Success", "status is: " + p.getStatus());
+//                    Log.d("Success", "date is: " + p.getDate());
+//                    Log.d("Success", "latitude is: " + p.getLatitude());
+//                    Log.d("Success", "longitude is: " + p.getLongitude());
+//                    Log.d("Success", "imageurl is: " + p.getImageURL());
+                    // adding to list
+                    userIdLt.add(p.getUserID());
+                    desLt.add(p.getDescription());
+                    statusLt.add(p.getStatus());
+                    dateLt.add(p.getDate());
+                    latLt.add(p.getLatitude());
+                    lngLt.add(p.getLongitude());
+                    imageurlLt.add(p.getImageURL());
+                }
+                // passing date to map_fragment and post_fragment using bundle
+                bundle = new Bundle();
+                bundle.putStringArrayList("userIds", userIdLt);
+                bundle.putStringArrayList("dess", desLt);
+                bundle.putStringArrayList("statuss", statusLt);
+                bundle.putStringArrayList("dates", dateLt);
+                // convertin array list to array for lat and lng
+                double latArr[] = new double[statusLt.size()];
+                double lngArr[] = new double[statusLt.size()];
+                for(int i = 0; i < statusLt.size(); i++) {
+                    latArr[i] = latLt.get(i);
+                    lngArr[i] = lngLt.get(i);
+                }
+                bundle.putDoubleArray("lats", latArr);
+                bundle.putDoubleArray("lngs", lngArr);
+                bundle.putStringArrayList("imageurls", imageurlLt);
+
+                // set Fragmentclass Arguments
+                map_fragment mapFrag = new map_fragment();
+                posts_fragment postFrag = new posts_fragment();
+                // sending data to fragments
+                mapFrag.setArguments(bundle);
+                postFrag.setArguments(bundle);
+
+                // ViewAdapter List
+                List<Fragment> list = new ArrayList<>();
+                list.add(mapFrag);
+                list.add(postFrag);
+
+                pager = findViewById(R.id.pager);
+                pagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), list);
+                pager.setAdapter(pagerAdapter);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Error", "Failed to read value.", error.toException());
+            }
+        });
+
         loadFAB();
-        loadPagerPage();
-    }
-
-    // Loads the Fragment Slides
-    public void loadPagerPage(){
-        List<Fragment> list = new ArrayList<>();
-        list.add(new map_fragment());
-        list.add(new posts_fragment());
-
-        pager = findViewById(R.id.pager);
-        pagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), list);
-        pager.setAdapter(pagerAdapter);
     }
 
     private void loadFAB(){
