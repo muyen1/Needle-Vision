@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,13 @@ public class PhotoActivity extends AppCompatActivity {
     private ImageButton btn_back;
     private ImageButton btn_upload;
     private ImageView imageView;
+
+    private TextView label_date;
+    private TextView tv_date;
+    private TextView label_location;
+    private TextView tv_location;
+    private EditText et_description;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +33,16 @@ public class PhotoActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
         btn_upload = findViewById(R.id.btn_upload);
         imageView = findViewById(R.id.imageView);
+        label_date = findViewById(R.id.label_date);
+        tv_date = findViewById(R.id.tv_date);
+        label_location = findViewById(R.id.label_location);
+        tv_location = findViewById(R.id.tv_location);
+        et_description = findViewById(R.id.et_description);
+
         photoPath = getIntent().getStringExtra("PHOTO_PATH");
         setPicture(photoPath);
+
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
