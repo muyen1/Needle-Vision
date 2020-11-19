@@ -135,54 +135,6 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         String coordinates = Double.toString(latitude) + ", " + Double.toString(longitude);
         tv_location.setText(coordinates);
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
-
-        //This function probably needs to be expanded to include other functionality.
-        //Currently just returns to the main activity
-        btn_upload.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getApplicationContext(),photoPath,Toast.LENGTH_SHORT).show();
-
-                String description = et_description.getText().toString();
-
-                eBody = "Date: " + date + "\n\n";
-                eBody +="Lat: " + latitude + "\n";
-                eBody +="Long: " + longitude + "\n\n";
-                eBody += "Description: \n";
-                eBody += description + "\n\n";
-
-                new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-                            GMailSender sender = new GMailSender(eUsername,
-                                    ePassword);
-                            sender.sendMail(eSubject, eBody,
-                                    eSender, eRecipients, photoPath);
-                        } catch (Exception e) {
-                            Log.e("SendMail", e.getMessage(), e);
-                        }
-                    }
-
-                }).start();
-
-                db.upload(photoPath, description, date, latitude, longitude);
-
-
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
     }
 
 
