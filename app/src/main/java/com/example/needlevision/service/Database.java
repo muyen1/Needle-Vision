@@ -38,7 +38,7 @@ public class Database {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void upload(String path){
+    public void upload(String path, final String description, final String date, final double lat, final double lon){
         final String randomKey = UUID.randomUUID().toString();
         final StorageReference imageRef = storageRef.child("/images/" + randomKey);
         Uri file = Uri.fromFile(new File(path));
@@ -62,7 +62,7 @@ public class Database {
 //                    dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 //                    date = dateFormat.format(calendar.getTime());
                     //INSERT STRINGS TO POST BELOW
-                    writeNewPost(getFirebaseUserID(), "2description string", "2status string", "11/18/2020", 123.1, 321.1, downloadUri.toString());
+                    writeNewPost(getFirebaseUserID(), description, "Active", date, lat, lon, downloadUri.toString());
                     Log.i("url", downloadUri.toString());
                 } else {
                     // Handle failures
