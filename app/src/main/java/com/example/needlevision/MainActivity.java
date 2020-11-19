@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.needlevision.service.Database;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -50,19 +51,15 @@ public class MainActivity extends AppCompatActivity {
     private GoogleMap mMap;
 
     private FirebaseAuth mAuth;
-    private String photoPath;
-    private Calendar calendar;
-    private SimpleDateFormat dateFormat;
-    private String date;
-    FirebaseStorage storage;
-    StorageReference storageRef;
-    UploadTask uploadTask;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
 
     private DatabaseReference mDatabase;
+    private String photoPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        calendar = Calendar.getInstance();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -74,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Read from the database upon adding new entry (UPDATE POSTINGS HERE)
@@ -117,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
             loadLoginPage();
             getSupportActionBar().hide();
         } else {
-            // Signed in successfully, show authenticated UI. DELETE LATER
-//            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
-//            startActivity(intent);
             loadPager();
         }
     }
@@ -235,74 +231,6 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 //    }
-    //private void upload(String path)
-    private void upload(String path){
-        final String randomKey = UUID.randomUUID().toString();
-        final StorageReference imageRef = storageRef.child("/images/" + randomKey);
-        Uri file = Uri.fromFile(new File(path));
-        uploadTask = imageRef.putFile(file);
-
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                // Continue with the task to get the download URL
-                return imageRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-                    date = dateFormat.format(calendar.getTime());
-                    //INSERT STRINGS TO POST BELOW
-                    //writeNewPost(getFirebaseUserID(), "description string", "status string", date, 123, 321, downloadUri.toString());
-                    Log.i("url", downloadUri.toString());
-                } else {
-                    // Handle failures
-                    // ...
-                }
-            }
-        });
-    }
-
-    private void writeNewPost(String userID, String description, String status, String date, double latitude, double longitude, String imageURL){
-        Post newPost = new Post(userID, description, status, date, latitude, longitude, imageURL);
-
-        String key = mDatabase.child("posts").push().getKey();
-        mDatabase.child("posts").child(key).setValue(newPost);
-
-        // Read from the database upon adding new entry (UPDATE POSTINGS HERE)
-        mDatabase.child("posts").child(key).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    Post data = dataSnapshot.getValue(Post.class);
-
-//                    LOG STATEMENTS FOR DEBUGGING
-//                    Log.d("Success", "userid is: " + data.getUserID());
-//                    Log.d("Success", "desc is: " + data.getDescription());
-//                    Log.d("Success", "status is: " + data.getStatus());
-//                    Log.d("Success", "date is: " + data.getDate());
-//                    Log.d("Success", "latitude is: " + data.getLatitude());
-//                    Log.d("Success", "longitude is: " + data.getLongitude());
-//                    Log.d("Success", "imageurl is: " + data.getImageURL());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Error", "Failed to read value.", error.toException());
-            }
-        });
-    }
 
     private void socialMediaUpload() {
         Intent mediaUpload = new Intent();
@@ -316,17 +244,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private String getFirebaseUserID(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid;
-        if (user != null) {
-            uid = user.getUid();
-        } else {
-            uid = "guest";
-        }
-        return uid;
-    }
-
+//
 //    private void socialMediaUpload() {
 //        Intent mediaUpload = new Intent();
 //        mediaUpload.setAction(Intent.ACTION_SEND);

@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -143,6 +144,7 @@ public class PostActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         photoPath = image.getAbsolutePath();
+        Log.i("photopath", photoPath);
         return image;
     }
 
