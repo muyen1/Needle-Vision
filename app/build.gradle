@@ -41,8 +41,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
-
-task prepareKotlinBuildScriptModel {}
     // Import the Firebase BoM
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
@@ -56,4 +54,5 @@ task prepareKotlinBuildScriptModel {}
 
     // Add the dependencies for the desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
-}
+
+task prepareKotlinBuildScriptModel {}
