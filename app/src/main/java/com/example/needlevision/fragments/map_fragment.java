@@ -251,7 +251,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     private double CalculationByDistance(LatLng StartP, LatLng EndP) {
         float results[] = new float[1000];
         Location.distanceBetween(StartP.latitude, StartP.longitude, EndP.latitude, EndP.longitude, results);
-        return Double.parseDouble(new DecimalFormat("0.#").format(results[0] / 1000));
+        return Double.parseDouble(new DecimalFormat("0.#").format(results[0] / 1000 + 10));
     }
 
 
