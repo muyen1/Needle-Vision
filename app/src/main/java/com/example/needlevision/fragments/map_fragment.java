@@ -74,7 +74,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     // posts listing
     private ListView postsList;
     // list of posts
-    List<Post> listPosts;
+    List<Post> listPosts, fullList;
     // data
     ArrayList<String> userIds;
     ArrayList<String> dess;
@@ -119,6 +119,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         // initiating list view
         postsList = context.findViewById(R.id.lvPosts);
         listPosts = new ArrayList<>();
+        fullList = new ArrayList<>();
         // finally got the data here
         userIds = getArguments().getStringArrayList("userIds");
         dess = getArguments().getStringArrayList("dess");
@@ -150,10 +151,16 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
 
         if (requestCode == FILTER_ID) {
             if (resultCode == RESULT_OK) {
+                listPosts = new ArrayList<>();
                 // Update Map Pins
                 distance = data.getIntExtra("distance", distance);
-                Snackbar.make(context, "Filter: "+ distance, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                for (int i = 0; i < fullList.size(); i++) {
+                    if (fullList.get(i).getDistance() <= (double)distance) {
+                        listPosts.add(fullList.get(i));
+                    }
+                }
+                PostListAdapter adapter = new PostListAdapter(getActivity(), listPosts);
+                postsList.setAdapter(adapter);
             } else {
 
             }
@@ -202,6 +209,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 return Double.compare(p1.getDistance(), p2.getDistance());
             }
         });
+        fullList = listPosts;
         // constructing posts adapter
         PostListAdapter adapter = new PostListAdapter(getActivity(), listPosts);
         postsList.setAdapter(adapter);

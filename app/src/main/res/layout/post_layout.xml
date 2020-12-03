@@ -73,11 +73,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/status"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/text_gap"
                 android:layout_marginRight="@dimen/text_gap"
-                android:layout_marginEnd="@dimen/text_gap">
-            </TextView>
+                android:text="@string/status"></TextView>
 
             <TextView
                 android:id="@+id/post_status"
@@ -95,11 +94,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/text_gap"
                 android:layout_marginRight="@dimen/text_gap"
-                android:layout_marginEnd="@dimen/text_gap">
-            </TextView>
+                android:text="@string/date"></TextView>
 
             <TextView
                 android:id="@+id/post_date"
