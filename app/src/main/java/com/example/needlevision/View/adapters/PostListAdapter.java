@@ -1,4 +1,4 @@
-package com.example.needlevision.adapters;
+package com.example.needlevision.View.adapters;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

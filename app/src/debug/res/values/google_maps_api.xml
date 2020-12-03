@@ -9,7 +9,7 @@
     You can also add your credentials to an existing key, using these values:
 
     Package name:
-    com.example.needlevision.fragments
+    com.example.needlevision.View.fragments
 
     SHA-1 certificate fingerprint:
     B5:25:63:01:CF:1F:D1:44:D8:40:2D:D8:3A:92:06:3E:B5:4C:4D:58
