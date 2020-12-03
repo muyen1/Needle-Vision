@@ -1,4 +1,4 @@
-package com.example.needlevision;
+package com.example.needlevision.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.R;
 import com.example.needlevision.adapters.SlidePagerAdapter;
 import com.example.needlevision.fragments.map_fragment;
 import com.example.needlevision.fragments.posts_fragment;
@@ -33,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

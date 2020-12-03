@@ -1,4 +1,4 @@
-package com.example.needlevision.service;
+package com.example.needlevision.Model;
 
 import java.security.AccessController;
 import java.security.Provider;

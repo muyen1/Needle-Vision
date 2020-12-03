@@ -1,6 +1,5 @@
 package com.example.needlevision.fragments;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,17 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.needlevision.Post;
-import com.example.needlevision.PostActivity;
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.View.PostActivity;
 import com.example.needlevision.R;
 import com.example.needlevision.adapters.PostListAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class posts_fragment extends Fragment {

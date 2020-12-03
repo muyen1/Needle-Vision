@@ -21,9 +21,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.needlevision.Filter;
-import com.example.needlevision.Post;
-import com.example.needlevision.PostActivity;
+import com.example.needlevision.View.Filter;
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.View.PostActivity;
 import com.example.needlevision.R;
 import com.example.needlevision.adapters.PostListAdapter;
 import com.google.android.gms.location.LocationServices;
@@ -40,7 +40,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

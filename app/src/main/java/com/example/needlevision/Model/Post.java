@@ -1,4 +1,4 @@
-package com.example.needlevision;
+package com.example.needlevision.Model;
 
 public class Post {
     private String userID;
