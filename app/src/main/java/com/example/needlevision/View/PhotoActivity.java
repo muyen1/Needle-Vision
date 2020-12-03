@@ -32,6 +32,8 @@ import com.example.needlevision.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.example.needlevision.Presenter.PhotoPresenter;
+
 public class PhotoActivity extends AppCompatActivity implements LocationListener {
 
     private String photoPath;
@@ -60,6 +62,8 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
     private double latitude;
     private double longitude;
 
+    private PhotoPresenter pp;
+
     private LocationManager lm;
 
     @Override
@@ -67,16 +71,14 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
+        pp = new PhotoPresenter(this);
 
-       // sEmail  = "comp7082group1@gmail.com";
-       // sPassword = "lol12345LOL";
-
-        eSubject = "email Subject";
-        eBody = "email body";
-        eRecipients = "comp7082group1@gmail.com";
-        eSender = "comp7082group1@gmail.com";
-        eUsername = "comp7082group1@gmail.com";
-        ePassword = "lol12345LOL";
+        eSubject = pp.geteSubject();
+        eBody = pp.geteBody();
+        eRecipients = pp.geteRecipients();
+        eSender = pp.geteSender();
+        eUsername = pp.geteUsername();
+        ePassword = pp.getePassword();
         
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -90,14 +92,14 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         et_description = findViewById(R.id.et_description);
 
         photoPath = getIntent().getStringExtra("PHOTO_PATH");
-        setPicture(photoPath);
+        pp.setPicture(photoPath, imageView);
 
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         calendar = Calendar.getInstance();
         date = df.format(calendar.getTime());
         tv_date.setText(date);
 
-        initLocation();
+        lm = pp.initLocation();
 
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -112,14 +114,11 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
             latitude = location.getLatitude();
             longitude = location.getLongitude();
         }
-
         String coordinates = Double.toString(latitude) + ", " + Double.toString(longitude);
         tv_location.setText(coordinates);
-
     }
 
-
-
+    /*
     public void initLocation(){
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -129,6 +128,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
                     1);
         }
     }
+     */
 
     public void onLocationChanged(Location location) {
         if (location != null) {
@@ -137,12 +137,10 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
     }
 
     public void onProviderDisabled(String provider) {
@@ -151,6 +149,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
     }
 
     // Set the current picture
+    /*
     public void setPicture(String photoPath) {
         int targetWidth = imageView.getWidth();
         int targetHeight = imageView.getHeight();
@@ -168,6 +167,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
         imageView.setImageBitmap(bitmap);
     }
+     */
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
@@ -217,5 +217,4 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
-
 }

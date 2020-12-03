@@ -58,9 +58,5 @@ public class Filter extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
-
-
 }
