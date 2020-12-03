@@ -24,16 +24,25 @@ import java.util.UUID;
 
 public class Database {
 
+    private static Database INSTANCE = null;
+
     private final FirebaseStorage storage;
     StorageReference storageRef;
     UploadTask uploadTask;
 
     private DatabaseReference mDatabase;
-
-    public Database() {
+    private Database() {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
+
+
+    public static Database getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Database();
+        }
+        return(INSTANCE);
     }
 
     public void upload(String path, final String description, final String date, final double lat, final double lon){

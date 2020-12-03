@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconDuplicates">
+        <ignore path="src/main/res/mipmap-hdpi/ic_launcher.png" />
+        <ignore path="src/main/res/mipmap-hdpi/ic_launcher_round.png" />
+        <ignore path="src/main/res/mipmap-mdpi/ic_launcher.png" />
+        <ignore path="src/main/res/mipmap-mdpi/ic_launcher_round.png" />
+        <ignore path="src/main/res/mipmap-xhdpi/ic_launcher.png" />
+        <ignore path="src/main/res/mipmap-xhdpi/ic_launcher_round.png" />
+        <ignore path="src/main/res/mipmap-xxhdpi/ic_launcher.png" />
+        <ignore path="src/main/res/mipmap-xxhdpi/ic_launcher_round.png" />
+        <ignore path="src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
+    </issue>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/back.png" />
+        <ignore path="src/main/res/drawable/cam.png" />
+        <ignore path="src/main/res/drawable/filter.png" />
+        <ignore path="src/main/res/drawable/gh.jpg" />
+        <ignore path="src/main/res/drawable/logo.png" />
+        <ignore path="src/main/res/drawable/nv_logo.png" />
+        <ignore path="src/main/res/drawable/option.png" />
+        <ignore path="src/main/res/drawable/send.png" />
+        <ignore path="src/main/res/drawable/settings.png" />
+        <ignore path="src/main/res/drawable/trash.png" />
+        <ignore path="src/main/res/drawable/user.png" />
+    </issue>
+</lint>

@@ -82,7 +82,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        db = new Database();
+        db = Database.getInstance();
 
         imageView = findViewById(R.id.imageView);
         label_date = findViewById(R.id.label_date);
