@@ -1,13 +1,9 @@
 <resources>
     <string name="app_name">Needle Vision</string>
     <string name="guest">Guest</string>
-    <string name="login">Login</string>
     <string name="camera">Camera</string>
     <string name="send_to">Send To</string>
-    <string name="map">Map</string>
     <string name="filter">Filter</string>
-    <string name="posts">Posts</string>
-    <string name="user">User</string>
     <string name="photo">Photo</string>
     <string name="date">Date: </string>
     <string name="time">Time: </string>
@@ -16,6 +12,5 @@
     <string name="description">Description: </string>
     <string name="active">Active</string>
     <string name="disposed">Disposed</string>
-    <string name="options">Options</string>
     <string name="dis">Distance</string>
 </resources>

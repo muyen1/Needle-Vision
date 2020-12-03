@@ -17,7 +17,7 @@
         android:id="@+id/lvPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/map_frag"
         android:divider="@color/colorGreen"
-        android:dividerHeight="2px" />
+        android:dividerHeight="2px"
+        tools:ignore="PxUsage" />
 </LinearLayout>

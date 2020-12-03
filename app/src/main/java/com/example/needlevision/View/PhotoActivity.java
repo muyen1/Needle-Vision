@@ -1,5 +1,6 @@
 package com.example.needlevision.View;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -94,7 +95,7 @@ public class PhotoActivity extends AppCompatActivity implements LocationListener
         photoPath = getIntent().getStringExtra("PHOTO_PATH");
         pp.setPicture(photoPath, imageView);
 
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         calendar = Calendar.getInstance();
         date = df.format(calendar.getTime());
         tv_date.setText(date);

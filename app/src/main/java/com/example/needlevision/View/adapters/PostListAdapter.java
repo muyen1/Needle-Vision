@@ -1,5 +1,6 @@
 package com.example.needlevision.View.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,7 +43,7 @@ public class PostListAdapter extends ArrayAdapter<Post> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         // view of list items
-        View listViewItem = inflater.inflate(R.layout.post_layout, null, true);
+        @SuppressLint("ViewHolder") View listViewItem = inflater.inflate(R.layout.post_layout, null, true);
 
         img = listViewItem.findViewById(R.id.post_img);
         TextView status = listViewItem.findViewById(R.id.post_status);
@@ -81,6 +82,7 @@ public class PostListAdapter extends ArrayAdapter<Post> {
     }
 
     // load image
+    @SuppressLint("StaticFieldLeak")
     private class LoadImage extends AsyncTask<String, Void, Bitmap> {
 
         ImageView imageView;
