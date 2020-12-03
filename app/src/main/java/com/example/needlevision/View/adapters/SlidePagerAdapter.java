@@ -1,4 +1,4 @@
-package com.example.needlevision.adapters;
+package com.example.needlevision.View.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

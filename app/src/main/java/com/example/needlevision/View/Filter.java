@@ -1,4 +1,4 @@
-package com.example.needlevision;
+package com.example.needlevision.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.needlevision.R;
 
 public class Filter extends AppCompatActivity {
     // 0 to 100 km
@@ -56,9 +58,5 @@ public class Filter extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
-
-
 }

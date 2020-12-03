@@ -1,25 +1,21 @@
-package com.example.needlevision;
+package com.example.needlevision.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.needlevision.service.Database;
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -34,13 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.UUID;
+
+import com.example.needlevision.Presenter.*;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
@@ -54,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private String photoPath;
+
+    private MainActivityPresenter mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mp = new MainActivityPresenter(this);
 
         // Read from the database upon adding new entry (UPDATE POSTINGS HERE)
         mDatabase.child("posts").addValueEventListener(new ValueEventListener() {
@@ -109,25 +105,22 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-
         if(account == null){
             loadLoginPage();
             getSupportActionBar().hide();
         } else {
-            loadPager();
+            mp.loadPager();
         }
     }
-    
+
     private void loadLoginPage(){
         setContentView(R.layout.activity_login);
         findViewById(R.id.guest_btn).setOnClickListener(new View.OnClickListener() {
             // Load the loadPagerPage function
             @Override
             public void onClick(View v) {
-
                 guestSignIn();
-                loadPager();
-
+                mp.loadPager();
             }
         });
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
@@ -148,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
@@ -169,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void guestSignIn(){
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -180,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("Success", "signInAnonymously:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             // Signed in successfully, show authenticated UI.
-                            loadPager();
+                            mp.loadPager();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -192,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
@@ -206,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("Success", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             // Signed in successfully, show authenticated UI.
-                            loadPager();
+                            mp.loadPager();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -230,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
 //                });
 //    }
 
+    /*
     private void socialMediaUpload() {
         Intent mediaUpload = new Intent();
         mediaUpload.setAction(Intent.ACTION_SEND);
@@ -237,10 +228,13 @@ public class MainActivity extends AppCompatActivity {
         mediaUpload.setType("image/jpg");
         this.startActivity(Intent.createChooser(mediaUpload, this.getResources().getText(R.string.send_to)));
     }
+     */
+    /*
     private void loadPager(){
         Intent intent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(intent);
     }
+     */
 
 //
 //    private void socialMediaUpload() {

@@ -1,4 +1,4 @@
-package com.example.needlevision.fragments;
+package com.example.needlevision.View.fragments;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,11 +21,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.needlevision.Filter;
-import com.example.needlevision.Post;
-import com.example.needlevision.PostActivity;
+import com.example.needlevision.View.Filter;
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.View.PostActivity;
 import com.example.needlevision.R;
-import com.example.needlevision.adapters.PostListAdapter;
+import com.example.needlevision.View.adapters.PostListAdapter;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,7 +40,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -49,7 +48,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-
 
 public class map_fragment extends Fragment implements OnMapReadyCallback {
     private static final int FILTER_ID = 9808;
@@ -198,7 +196,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
             // getting the logLat
             LatLng ptLatlng = new LatLng(lats[i], longs[i]);
             pt = new Post(userIds.get(i), dess.get(i), statuss.get(i),
-                        dates.get(i), lats[i], longs[i], imageurls.get(i));
+                    dates.get(i), lats[i], longs[i], imageurls.get(i));
             pt.setDistance(CalculationByDistance(currentLatLng, ptLatlng));
             listPosts.add(pt);
         }

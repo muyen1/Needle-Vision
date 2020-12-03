@@ -1,6 +1,4 @@
-package com.example.needlevision.service;
-
-import android.util.Log;
+package com.example.needlevision.Model;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,7 +20,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
 
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
@@ -33,7 +30,7 @@ public class GMailSender extends javax.mail.Authenticator {
     private Multipart _multipart;
 
     static {
-        Security.addProvider(new com.example.needlevision.service.JSSEProvider());
+        Security.addProvider(new com.example.needlevision.Model.JSSEProvider());
     }
 
     public GMailSender(String user, String password) {

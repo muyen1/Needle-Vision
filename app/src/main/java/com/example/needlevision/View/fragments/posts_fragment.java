@@ -1,6 +1,5 @@
-package com.example.needlevision.fragments;
+package com.example.needlevision.View.fragments;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,21 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.needlevision.Post;
-import com.example.needlevision.PostActivity;
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.Model.PostsFragmentModel;
+import com.example.needlevision.View.PostActivity;
 import com.example.needlevision.R;
-import com.example.needlevision.adapters.PostListAdapter;
+import com.example.needlevision.View.adapters.PostListAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class posts_fragment extends Fragment {
-
+    private PostsFragmentModel pfp;
     ViewGroup context;
     // data
     ArrayList<String> userIds;
@@ -41,17 +38,15 @@ public class posts_fragment extends Fragment {
     // posts listing
     private ListView postsList;
     // list of posts
-    List<Post> listPosts;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.posts_page,container,false);
-
         context = rootView;
         // initiating list view
         postsList = context.findViewById(R.id.postPageList);
-        listPosts = new ArrayList<>();
+        pfp = new PostsFragmentModel(getContext());
 
         // firebase date
         // finally got the data here
@@ -63,16 +58,10 @@ public class posts_fragment extends Fragment {
         longs = getArguments().getDoubleArray("lngs");
         imageurls = getArguments().getStringArrayList("imageurls");
 
-        for (int i = 0; i < statuss.size(); i++) {
-            Post pt;
-            // getting the logLat
-            LatLng ptLatlng = new LatLng(lats[i], longs[i]);
-            pt = new Post(userIds.get(i), dess.get(i), statuss.get(i),
-                    dates.get(i), lats[i], longs[i], imageurls.get(i));
-            listPosts.add(pt);
-        }
+        pfp.generateListPost(userIds, dess, statuss, dates, imageurls, lats, longs);
+
         // constructing posts adapter
-        PostListAdapter adapter = new PostListAdapter(getActivity(), listPosts);
+        PostListAdapter adapter = new PostListAdapter(getActivity(), pfp.getListPost());
         postsList.setAdapter(adapter);
 
         return rootView;

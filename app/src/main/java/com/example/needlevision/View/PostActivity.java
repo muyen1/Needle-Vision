@@ -1,4 +1,4 @@
-package com.example.needlevision;
+package com.example.needlevision.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +14,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.needlevision.adapters.SlidePagerAdapter;
-import com.example.needlevision.fragments.map_fragment;
-import com.example.needlevision.fragments.posts_fragment;
+import com.example.needlevision.Model.Post;
+import com.example.needlevision.Model.PostActivityModel;
+import com.example.needlevision.Presenter.PostActivityPresenter;
+import com.example.needlevision.R;
+import com.example.needlevision.View.adapters.SlidePagerAdapter;
+import com.example.needlevision.View.fragments.map_fragment;
+import com.example.needlevision.View.fragments.posts_fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -32,18 +35,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
+    private PostActivityPresenter pap;
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int PHOTO_REQUEST_CODE = 103;
-    private String photoPath;
 
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
@@ -66,6 +65,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        pap = new PostActivityPresenter(PostActivity.this);
         // Read from the database upon adding new entry (UPDATE POSTINGS HERE)
         mDatabase.child("posts").addValueEventListener(new ValueEventListener() {
             @Override
@@ -172,7 +172,7 @@ public class PostActivity extends AppCompatActivity {
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (camera.resolveActivity(this.getPackageManager()) != null) {
             File photoFile = null;
-            photoFile = createImageFile();
+            photoFile = pap.createImageFile();
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.FileProvider", photoFile);
                 camera.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -187,11 +187,12 @@ public class PostActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode != RESULT_OK) {
-                File nullPhoto = new File(photoPath);
-                nullPhoto.delete();
+//                File nullPhoto = new File(photoPath);
+//                nullPhoto.delete();
+                pap.deleteNullPhoto();
             } else {
                 Intent photoActivity = new Intent(this, PhotoActivity.class);
-                photoActivity.putExtra("PHOTO_PATH", photoPath);
+                photoActivity.putExtra("PHOTO_PATH", pap.getPhotoPath());
                 startActivityForResult(photoActivity, PHOTO_REQUEST_CODE);
             }
         } else if (requestCode == PHOTO_REQUEST_CODE) {
@@ -211,22 +212,22 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    // Create Image File
-    public File createImageFile() {
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        String imageName = timestamp + "_";
-        File storageDirectory = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = null;
-
-        try {
-            image = File.createTempFile(imageName, ".jpg", storageDirectory);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        photoPath = image.getAbsolutePath();
-        Log.i("photopath", photoPath);
-        return image;
-    }
+//    // Create Image File
+//    public File createImageFile() {
+//        String timestamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+//        String imageName = timestamp + "_";
+//        File storageDirectory = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File image = null;
+//
+//        try {
+//            image = File.createTempFile(imageName, ".jpg", storageDirectory);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        photoPath = image.getAbsolutePath();
+//        Log.i("photopath", photoPath);
+//        return image;
+//    }
 
 
 }
